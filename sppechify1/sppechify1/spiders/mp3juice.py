@@ -2,7 +2,9 @@ import scrapy
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
-from webdriver_manager.chrome import ChromeDriverManager # type: ignore
+from webdriver_manager.chrome import ChromeDriverManager
+from selenium.webdriver.common.by import By
+from selenium.webdriver.common.keys import Keys
 
 class MP3Spider(scrapy.Spider):
     name = 'mp3juice'
@@ -18,9 +20,9 @@ class MP3Spider(scrapy.Spider):
         self.driver.get(response.url)
 
         # Simulate a search query
-        search_box = self.driver.find_element("xpath", "//input[@name='url']")
+        search_box = self.driver.find_element(By.XPATH, "//input[@name='url']")
         search_box.send_keys("Justin Bieber - Hold On")  # Replace with your song name
-        search_box.submit()
+        search_box.send_keys(Keys.RETURN)  # Submit search by pressing Enter
 
         self.driver.implicitly_wait(5)  # Wait for results to load
 
